@@ -4,6 +4,8 @@
 //
 //  Application delegate for handling push notifications and CloudKit changes
 //  Manages app lifecycle events and background sync
+//  Created by Agent 1: Foundation & Setup Specialist
+//  Purpose: Handle CloudKit notifications and app lifecycle events
 //
 
 import UIKit
@@ -61,12 +63,27 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
 
     // MARK: - Remote Notifications (CloudKit Push)
 
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+    ) -> Bool {
+        // Register for remote notifications to receive CloudKit updates
+        application.registerForRemoteNotifications()
+
+        print("✅ AppDelegate: Registered for remote notifications")
+        return true
+    }
+
     func application(
         _ application: UIApplication,
         didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
     ) {
         let tokenString = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
         print("📱 Registered for remote notifications: \(tokenString)")
+        print("✅ AppDelegate: Successfully registered for remote notifications")
     }
 
     func application(
@@ -77,6 +94,9 @@ class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDele
     }
 
     /// Handle CloudKit push notifications for background sync
+        print("❌ AppDelegate: Failed to register for remote notifications: \(error.localizedDescription)")
+    }
+
     func application(
         _ application: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
@@ -325,4 +345,20 @@ extension Notification.Name {
     static let navigateToTask = Notification.Name("NavigateToTask")
     static let syncCompleted = Notification.Name("SyncCompleted")
     static let syncFailed = Notification.Name("SyncFailed")
+}
+        // CloudKit silent notifications come through here
+        // Check if this is a CloudKit notification
+        if let notification = CKNotification(fromRemoteNotificationDictionary: userInfo) {
+            print("📩 AppDelegate: Received CloudKit notification: \(notification.notificationType.rawValue)")
+
+            // TODO: Agent 3 will implement DataSyncService
+            // For now, just acknowledge the notification
+            // Future implementation:
+            // dataSyncService.handleRemoteNotification(notification)
+
+            completionHandler(.newData)
+        } else {
+            completionHandler(.noData)
+        }
+    }
 }

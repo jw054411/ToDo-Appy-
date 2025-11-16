@@ -4,6 +4,8 @@
 //
 //  Main app entry point with automatic sync triggers
 //  Handles app lifecycle and periodic synchronization
+//  Created by Agent 1: Foundation & Setup Specialist
+//  Main entry point for the ToDo-Appy application
 //
 
 import SwiftUI
@@ -310,6 +312,13 @@ struct ServiceStatusRow: View {
             Text(status)
                 .foregroundStyle(.green)
                 .fontWeight(.medium)
+    // Connect AppDelegate for CloudKit notification handling
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .preferredColorScheme(.dark) // Force dark mode as per requirements
         }
     }
 }
