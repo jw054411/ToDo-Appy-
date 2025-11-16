@@ -1,0 +1,64 @@
+# SwiftLint Configuration for ToDo-Appy
+# Created by Agent 1: Foundation & Setup Specialist
+
+# Paths to exclude from linting
+excluded:
+  - Pods
+  - .build
+  - DerivedData
+  - Carthage
+  - vendor
+
+# Disable rules
+disabled_rules:
+  - trailing_whitespace
+  - todo
+  - force_cast
+  - force_try
+
+# Opt-in rules
+opt_in_rules:
+  - empty_count
+  - empty_string
+  - explicit_init
+  - first_where
+  - sorted_first_last
+  - contains_over_first_not_nil
+
+# Rule configurations
+line_length:
+  warning: 120
+  error: 150
+  ignores_comments: true
+
+file_length:
+  warning: 500
+  error: 1000
+
+function_body_length:
+  warning: 60
+  error: 100
+
+type_body_length:
+  warning: 300
+  error: 500
+
+identifier_name:
+  min_length:
+    warning: 2
+  max_length:
+    warning: 50
+  excluded:
+    - id
+    - URL
+    - url
+
+# Custom rules
+custom_rules:
+  no_print:
+    name: "No Print Statements"
+    regex: 'print\('
+    match_kinds:
+      - identifier
+    message: "Use Logger instead of print statements"
+    severity: warning
