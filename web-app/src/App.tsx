@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import Layout from './components/layout/Layout';
+import ProjectsPage from './pages/ProjectsPage';
+import TrackersPage from './pages/TrackersPage';
+import SettingsPage from './pages/SettingsPage';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [showSettings, setShowSettings] = useState(false);
+
+  const handleSettingsClick = () => {
+    setShowSettings(true);
+  };
+
+  const handleCloseSettings = () => {
+    setShowSettings(false);
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <BrowserRouter>
+      {showSettings ? (
+        <div className="settings-overlay">
+          <div className="settings-modal">
+            <div className="settings-modal-header">
+              <h2>Settings</h2>
+              <button className="close-button" onClick={handleCloseSettings}>
+                ✕
+              </button>
+            </div>
+            <div className="settings-modal-content">
+              <SettingsPage />
+            </div>
+          </div>
+        </div>
+      ) : null}
+
+      <Routes>
+        <Route path="/" element={<Layout onSettingsClick={handleSettingsClick} />}>
+          <Route index element={<Navigate to="/projects" replace />} />
+          <Route path="projects" element={<ProjectsPage />} />
+          <Route path="trackers" element={<TrackersPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
-export default App
+export default App;

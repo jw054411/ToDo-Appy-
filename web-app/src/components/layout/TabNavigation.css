@@ -1,0 +1,27 @@
+.tab-navigation {
+  display: flex;
+  gap: 0;
+  background-color: #f3f4f6;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.tab-link {
+  padding: 1rem 2rem;
+  text-decoration: none;
+  color: #6b7280;
+  font-weight: 500;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.tab-link:hover {
+  background-color: #e5e7eb;
+  color: #374151;
+}
+
+.tab-link.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+  background-color: white;
+}
