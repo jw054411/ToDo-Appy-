@@ -1,0 +1,64 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+env:
+  XCODE_VERSION: '15.0'
+
+jobs:
+  build-release:
+    name: Build Release
+    runs-on: macos-14
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Select Xcode version
+      run: sudo xcode-select -s /Applications/Xcode_${{ env.XCODE_VERSION }}.app
+
+    - name: Display Xcode version
+      run: xcodebuild -version
+
+    - name: Install dependencies
+      run: |
+        if [ -f "Podfile" ]; then
+          pod install
+        fi
+
+    - name: Build for iOS
+      run: |
+        xcodebuild archive \
+          -scheme "ToDo-Appy" \
+          -destination "generic/platform=iOS" \
+          -archivePath "./build/ToDo-Appy-iOS.xcarchive" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+
+    - name: Build for macOS
+      run: |
+        xcodebuild archive \
+          -scheme "ToDo-Appy" \
+          -destination "generic/platform=macOS" \
+          -archivePath "./build/ToDo-Appy-macOS.xcarchive" \
+          CODE_SIGN_IDENTITY="" \
+          CODE_SIGNING_REQUIRED=NO
+
+    - name: Create release notes
+      run: |
+        echo "## Release ${{ github.ref_name }}" > release_notes.md
+        echo "" >> release_notes.md
+        echo "### Changes" >> release_notes.md
+        git log $(git describe --tags --abbrev=0 HEAD^)..HEAD --pretty=format:"- %s" >> release_notes.md
+
+    - name: Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          ./build/*.xcarchive
+        body_path: release_notes.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

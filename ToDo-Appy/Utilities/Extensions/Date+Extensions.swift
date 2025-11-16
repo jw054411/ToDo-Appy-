@@ -1,42 +1,35 @@
+//
+//  Date+Extensions.swift
+//  ToDo-Appy
+//
+//  Created by Agent 1: Foundation & Setup Specialist
+//  Useful date utility methods for task management
+//
+
 import Foundation
 
 extension Date {
-    /// Check if this date is today
+    /// Check if date is today
     var isToday: Bool {
         Calendar.current.isDateInToday(self)
     }
 
-    /// Check if this date is tomorrow
+    /// Check if date is tomorrow
     var isTomorrow: Bool {
         Calendar.current.isDateInTomorrow(self)
     }
 
-    /// Check if this date is yesterday
-    var isYesterday: Bool {
-        Calendar.current.isDateInYesterday(self)
+    /// Check if date is in the past (excluding today)
+    var isOverdue: Bool {
+        self < Date() && !isToday
     }
 
-    /// Check if this date is in the current week
-    var isThisWeek: Bool {
-        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear)
-    }
-
-    /// Check if this date is in the current month
-    var isThisMonth: Bool {
-        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month)
-    }
-
-    /// Check if this date is in the current year
-    var isThisYear: Bool {
-        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
-    }
-
-    /// Get the start of the day for this date
+    /// Get the start of the day (00:00:00)
     var startOfDay: Date {
         Calendar.current.startOfDay(for: self)
     }
 
-    /// Get the end of the day for this date
+    /// Get the end of the day (23:59:59)
     var endOfDay: Date {
         var components = DateComponents()
         components.day = 1
@@ -44,66 +37,84 @@ extension Date {
         return Calendar.current.date(byAdding: components, to: startOfDay) ?? self
     }
 
-    /// Get a date representing the start of the week containing this date
-    var startOfWeek: Date? {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: self)
-        return calendar.date(from: components)
+    /// Check if date is this week
+    var isThisWeek: Bool {
+        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .weekOfYear)
     }
 
-    /// Get a date representing the end of the week containing this date
-    var endOfWeek: Date? {
-        guard let startOfWeek = startOfWeek else { return nil }
-        return Calendar.current.date(byAdding: .day, value: 6, to: startOfWeek)?.endOfDay
+    /// Check if date is this month
+    var isThisMonth: Bool {
+        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .month)
     }
 
-    /// Get a date representing the start of the month containing this date
-    var startOfMonth: Date? {
-        let calendar = Calendar.current
-        let components = calendar.dateComponents([.year, .month], from: self)
-        return calendar.date(from: components)
+    /// Check if date is this year
+    var isThisYear: Bool {
+        Calendar.current.isDate(self, equalTo: Date(), toGranularity: .year)
     }
 
-    /// Get a date representing the end of the month containing this date
-    var endOfMonth: Date? {
-        guard let startOfMonth = startOfMonth else { return nil }
-        var components = DateComponents()
-        components.month = 1
-        components.second = -1
-        return Calendar.current.date(byAdding: components, to: startOfMonth)
-    }
-
-    /// Get a formatted string representation of this date
-    func formatted(_ style: DateFormatter.Style = .medium) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = style
-        formatter.timeStyle = .none
-        return formatter.string(from: self)
-    }
-
-    /// Get a relative description of this date (e.g., "Today", "Yesterday", "Tomorrow")
+    /// Get a human-readable relative date string (e.g., "Today", "Tomorrow", "Yesterday")
     var relativeDescription: String {
         if isToday {
             return "Today"
         } else if isTomorrow {
             return "Tomorrow"
-        } else if isYesterday {
+        } else if Calendar.current.isDateInYesterday(self) {
             return "Yesterday"
+        } else if isThisWeek {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "EEEE" // Day name (e.g., "Monday")
+            return formatter.string(from: self)
+        } else if isThisYear {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMM d" // e.g., "Jan 15"
+            return formatter.string(from: self)
         } else {
             let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            formatter.timeStyle = .none
+            formatter.dateFormat = "MMM d, yyyy" // e.g., "Jan 15, 2024"
             return formatter.string(from: self)
         }
     }
 
-    /// Check if this date is in the past
-    var isPast: Bool {
-        self < Date()
+    /// Get formatted time string (e.g., "3:30 PM")
+    var timeString: String {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        return formatter.string(from: self)
     }
 
-    /// Check if this date is in the future
-    var isFuture: Bool {
-        self > Date()
+    /// Get formatted date and time string
+    var dateTimeString: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: self)
+    }
+
+    /// Add days to current date
+    /// - Parameter days: Number of days to add (can be negative)
+    /// - Returns: New date with days added
+    func adding(days: Int) -> Date {
+        Calendar.current.date(byAdding: .day, value: days, to: self) ?? self
+    }
+
+    /// Add weeks to current date
+    /// - Parameter weeks: Number of weeks to add (can be negative)
+    /// - Returns: New date with weeks added
+    func adding(weeks: Int) -> Date {
+        Calendar.current.date(byAdding: .weekOfYear, value: weeks, to: self) ?? self
+    }
+
+    /// Add months to current date
+    /// - Parameter months: Number of months to add (can be negative)
+    /// - Returns: New date with months added
+    func adding(months: Int) -> Date {
+        Calendar.current.date(byAdding: .month, value: months, to: self) ?? self
+    }
+
+    /// Add years to current date
+    /// - Parameter years: Number of years to add (can be negative)
+    /// - Returns: New date with years added
+    func adding(years: Int) -> Date {
+        Calendar.current.date(byAdding: .year, value: years, to: self) ?? self
     }
 }

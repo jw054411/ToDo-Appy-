@@ -1,0 +1,147 @@
+/*
+  Localizable.strings
+  ToDo-Appy
+
+  Created by Agent 1: Foundation & Setup Specialist
+  English localization strings (default)
+*/
+
+/* App Name */
+"app.name" = "ToDo-Appy";
+"app.tagline" = "Your Personal Task Manager";
+
+/* General */
+"general.save" = "Save";
+"general.cancel" = "Cancel";
+"general.delete" = "Delete";
+"general.edit" = "Edit";
+"general.done" = "Done";
+"general.add" = "Add";
+"general.close" = "Close";
+"general.ok" = "OK";
+"general.yes" = "Yes";
+"general.no" = "No";
+"general.confirm" = "Confirm";
+"general.search" = "Search";
+"general.filter" = "Filter";
+"general.sort" = "Sort";
+"general.settings" = "Settings";
+
+/* Tasks */
+"tasks.title" = "Tasks";
+"tasks.new" = "New Task";
+"tasks.all" = "All Tasks";
+"tasks.today" = "Today";
+"tasks.upcoming" = "Upcoming";
+"tasks.overdue" = "Overdue";
+"tasks.completed" = "Completed";
+"tasks.no_due_date" = "No Due Date";
+"tasks.add_task" = "Add Task";
+"tasks.edit_task" = "Edit Task";
+"tasks.delete_task" = "Delete Task";
+"tasks.complete_task" = "Complete Task";
+"tasks.uncomplete_task" = "Mark as Incomplete";
+"tasks.no_tasks" = "No tasks yet";
+"tasks.no_tasks_description" = "Tap + to create your first task";
+
+/* Task Details */
+"task.title" = "Title";
+"task.description" = "Description";
+"task.due_date" = "Due Date";
+"task.priority" = "Priority";
+"task.category" = "Category";
+"task.tags" = "Tags";
+"task.reminder" = "Reminder";
+"task.recurring" = "Recurring";
+"task.subtasks" = "Subtasks";
+"task.notes" = "Notes";
+
+/* Priority */
+"priority.none" = "None";
+"priority.low" = "Low";
+"priority.medium" = "Medium";
+"priority.high" = "High";
+"priority.urgent" = "Urgent";
+
+/* Recurrence */
+"recurrence.none" = "None";
+"recurrence.daily" = "Daily";
+"recurrence.weekly" = "Weekly";
+"recurrence.monthly" = "Monthly";
+"recurrence.yearly" = "Yearly";
+"recurrence.custom" = "Custom";
+
+/* Categories */
+"categories.title" = "Categories";
+"categories.new" = "New Category";
+"categories.all" = "All Categories";
+"categories.no_categories" = "No categories";
+"categories.add_category" = "Add Category";
+
+/* Tags */
+"tags.title" = "Tags";
+"tags.new" = "New Tag";
+"tags.all" = "All Tags";
+"tags.no_tags" = "No tags";
+"tags.add_tag" = "Add Tag";
+
+/* Settings */
+"settings.title" = "Settings";
+"settings.general" = "General";
+"settings.appearance" = "Appearance";
+"settings.notifications" = "Notifications";
+"settings.sync" = "Sync";
+"settings.data" = "Data";
+"settings.about" = "About";
+"settings.haptics" = "Haptic Feedback";
+"settings.sound" = "Sound";
+
+/* Sync */
+"sync.title" = "Sync";
+"sync.syncing" = "Syncing...";
+"sync.synced" = "Synced";
+"sync.last_sync" = "Last sync: %@";
+"sync.never_synced" = "Never synced";
+"sync.sync_now" = "Sync Now";
+"sync.auto_sync" = "Automatic Sync";
+"sync.icloud_status" = "iCloud Status";
+
+/* Errors */
+"error.title" = "Error";
+"error.generic" = "Something went wrong";
+"error.network" = "No internet connection";
+"error.sync_failed" = "Sync failed";
+"error.save_failed" = "Failed to save";
+"error.delete_failed" = "Failed to delete";
+"error.icloud_not_available" = "iCloud is not available";
+"error.permission_denied" = "Permission denied";
+
+/* Alerts */
+"alert.delete_task.title" = "Delete Task?";
+"alert.delete_task.message" = "This task will be deleted permanently.";
+"alert.delete_category.title" = "Delete Category?";
+"alert.delete_category.message" = "This will not delete tasks in this category.";
+"alert.clear_completed.title" = "Clear Completed?";
+"alert.clear_completed.message" = "This will delete all completed tasks.";
+
+/* Empty States */
+"empty.tasks" = "No tasks";
+"empty.tasks.description" = "You're all caught up!";
+"empty.search" = "No results";
+"empty.search.description" = "Try a different search term";
+
+/* Time */
+"time.today" = "Today";
+"time.tomorrow" = "Tomorrow";
+"time.yesterday" = "Yesterday";
+"time.this_week" = "This Week";
+"time.next_week" = "Next Week";
+"time.overdue" = "Overdue";
+
+/* Accessibility */
+"accessibility.task_completed" = "Task completed";
+"accessibility.task_incomplete" = "Task incomplete";
+"accessibility.high_priority" = "High priority task";
+"accessibility.has_due_date" = "Due %@";
+"accessibility.add_task" = "Add new task";
+"accessibility.close_button" = "Close";

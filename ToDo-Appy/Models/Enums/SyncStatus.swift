@@ -1,39 +1,59 @@
+//
+//  SyncStatus.swift
+//  ToDo-Appy
+//
+//  Created by Agent 1: Foundation & Setup Specialist
+//  Represents the sync state of a Syncable object
+//
+
 import Foundation
 
-/// Represents the sync status of a model with CloudKit
-enum SyncStatus: Int, Codable, CaseIterable {
-    /// Changes pending, not yet synced to CloudKit
-    case pending = 0
+/// Represents the current synchronization status of an object with CloudKit
+enum SyncStatus: String, Codable, CaseIterable {
+    /// Object is fully synced with CloudKit
+    case synced
 
-    /// Currently syncing with CloudKit
-    case syncing = 1
+    /// Object has local changes that need to be synced to CloudKit
+    case pending
 
-    /// Successfully synced with CloudKit
-    case synced = 2
+    /// Object is currently being synced
+    case syncing
 
-    /// Sync failed, needs retry
-    case failed = 3
+    /// Object has a sync conflict (different versions on device and cloud)
+    case conflict
 
-    /// Conflict detected during sync
-    case conflict = 4
+    /// Object encountered an error during sync
+    case error
 
+    /// Human-readable description
     var displayName: String {
         switch self {
-        case .pending: return "Pending"
-        case .syncing: return "Syncing"
-        case .synced: return "Synced"
-        case .failed: return "Failed"
-        case .conflict: return "Conflict"
+        case .synced:
+            return "Synced"
+        case .pending:
+            return "Pending Sync"
+        case .syncing:
+            return "Syncing..."
+        case .conflict:
+            return "Conflict"
+        case .error:
+            return "Sync Error"
         }
     }
 
-    var icon: String {
+    /// Icon name for UI display
+    var iconName: String {
         switch self {
-        case .pending: return "clock"
-        case .syncing: return "arrow.triangle.2.circlepath"
-        case .synced: return "checkmark.icloud"
-        case .failed: return "exclamationmark.icloud"
-        case .conflict: return "exclamationmark.triangle"
+        case .synced:
+            return "checkmark.icloud.fill"
+        case .pending:
+            return "clock.badge.exclamationmark"
+        case .syncing:
+            return "arrow.triangle.2.circlepath"
+        case .conflict:
+            return "exclamationmark.triangle.fill"
+        case .error:
+            return "xmark.icloud.fill"
         }
     }
 }
